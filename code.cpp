@@ -1,36 +1,36 @@
 #include <bits/stdc++.h>
-
+#define ll long long
+#define fi first
+#define se second
+#define f(i,a,b) for(int i=a; i<=b; ++i)
+#define fn(i,a,b) for(int i=a; i>=b; --i)
+const int MOD=1e9+7;
 using namespace std;
 
-int n, x[105], k, used[105]={};
-void Output(){
-    for(int i = 1; i <= n; ++i)
-         cout << x[i] <<(i<n?" ":"\n");
-}
-void Try(int i){
-    for(int j = 1; j <= n; ++j){
-        if(used[j] == 0){
-            used[j] = 1;
-            x[i] = j;
+
+ll solve(ll n, ll k){
+	ll dp[k+1][n+1];
+	 f(i,0,n) dp[1][i] = 1;
+    ll sum = 0;
+    f(i,2,k){
+        f(j,0,n){
+            sum = 0;
+            f(x,0,j)
+                sum += dp[i - 1][x];
+            dp[i][j] = sum;
         }
-        else continue;
-        if(i == n) Output();
-        if(i < n)  Try(i + 1);
-        used[j] = 0;
-
     }
+    return dp[k][n];
 }
-
 int main()
 {
-
-    ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    //freopen("input.txt","r",stdin);
-    //freopen("output.txt","w",stdout);
-    int t; cin >>t;
-    while(t--){
-        cin >>n;
-        Try(1);
-    }
-   return 0;
+  ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+  int t;
+  cin >> t;
+  while(t--){
+  	ll n, k;
+  	cin >>n >>k;
+  	cout <<solve(n, k)<<'\n';
+  }
+return 0;
 }
